@@ -6,6 +6,10 @@ module.exports = {
       {
         alias: {
           '@': './src',
+          fs: '@dr.pogodin/react-native-fs',
+          crypto: 'react-native-quick-crypto',
+          stream: 'stream-browserify',
+          buffer: '@craftzdog/react-native-buffer',
         },
         extensions: ['.js', '.json'],
         root: ['./src'],
