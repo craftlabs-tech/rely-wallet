@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Sentry from '@sentry/react-native';
 import { useRef } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
@@ -77,21 +76,19 @@ function ApplicationNavigator() {
   };
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer
-        ref={containerRef}
-        theme={navigationTheme}
-        linking={linking}
-        onReady={onReady}
-        onStateChange={onStateChange}>
-        <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
-          <Stack.Screen component={Startup} name={Paths.Startup} />
-          <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
-          <Stack.Screen component={Welcome} name={Paths.Welcome} />
-          <Stack.Screen component={Example} name={Paths.Example} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <NavigationContainer
+      ref={containerRef}
+      theme={navigationTheme}
+      linking={linking}
+      onReady={onReady}
+      onStateChange={onStateChange}>
+      <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
+        <Stack.Screen component={Startup} name={Paths.Startup} />
+        <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
+        <Stack.Screen component={Welcome} name={Paths.Welcome} />
+        <Stack.Screen component={Example} name={Paths.Example} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
