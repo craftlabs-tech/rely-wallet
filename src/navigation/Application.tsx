@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Sentry from '@sentry/react-native';
 import { useRef } from 'react';
+import { useWindowDimensions } from 'react-native';
 
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
@@ -13,7 +14,10 @@ import { Example, Onboarding, Startup, Welcome } from '@/screens';
 
 import { storage } from '@/services/mmkv';
 
+import { createBottomSheetNavigator } from './bottom-sheet';
+
 const Stack = createStackNavigator<RootStackParamList>();
+const BSStack = createBottomSheetNavigator();
 
 function ApplicationNavigator() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,10 +89,23 @@ function ApplicationNavigator() {
       <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
         <Stack.Screen component={Startup} name={Paths.Startup} />
         <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
-        <Stack.Screen component={Welcome} name={Paths.Welcome} />
+        <Stack.Screen component={WalletNavigator} name={Paths.Welcome} options={{ gestureEnabled: false }} />
         <Stack.Screen component={Example} name={Paths.Example} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+function WalletNavigator() {
+  const { height } = useWindowDimensions();
+
+  return (
+    <BSStack.Navigator screenOptions={{ headerShown: false }}>
+      <BSStack.Screen component={Welcome} name="home" />
+      <BSStack.Screen component={Welcome} name="createWallet" options={{ height: height * 0.5 }} />
+      <BSStack.Screen component={Example} name="importWallet" />
+      <BSStack.Screen component={Example} name="setPassword" />
+    </BSStack.Navigator>
   );
 }
 

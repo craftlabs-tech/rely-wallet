@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import type { TextStyle, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { ActivityIndicator, Animated, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -32,8 +32,8 @@ type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 interface Props {
   children: React.ReactNode | string;
   onPress?: () => void;
-  style?: ViewStyle | ViewStyle[];
-  textStyle?: TextStyle;
+  style?: StyleProp<ViewStyle> | undefined;
+  textStyle?: StyleProp<TextStyle> | undefined;
   isDisabled?: boolean;
   isLoading?: boolean;
   variant?: ButtonVariant;
