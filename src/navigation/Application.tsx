@@ -10,7 +10,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
 
-import { Example, Startup } from '@/screens';
+import { Example, Onboarding, Startup, Welcome } from '@/screens';
 
 import { storage } from '@/services/mmkv';
 
@@ -86,7 +86,8 @@ function ApplicationNavigator() {
         onStateChange={onStateChange}>
         <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
           <Stack.Screen component={Startup} name={Paths.Startup} />
-          <Stack.Screen component={Example} name={Paths.Onboarding} />
+          <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
+          <Stack.Screen component={Welcome} name={Paths.Welcome} />
           <Stack.Screen component={Example} name={Paths.Example} />
         </Stack.Navigator>
       </NavigationContainer>

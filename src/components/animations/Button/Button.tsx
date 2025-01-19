@@ -114,7 +114,7 @@ const BUTTON_SIZES = {
     minHeight: 48,
     paddingHorizontal: 64,
     paddingVertical: 8,
-    fontSize: 24,
+    fontSize: 20,
     iconSize: 28,
   },
 } as const;

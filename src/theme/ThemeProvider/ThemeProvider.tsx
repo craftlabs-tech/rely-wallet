@@ -1,35 +1,15 @@
 import type { PropsWithChildren } from 'react';
 import type { MMKV } from 'react-native-mmkv';
-import type {
-  FulfilledThemeConfiguration,
-  Variant,
-} from '@/theme/types/config';
+import type { FulfilledThemeConfiguration, Variant } from '@/theme/types/config';
 import type { ComponentTheme, Theme } from '@/theme/types/theme';
 
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { DefaultTheme } from '@react-navigation/native';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
-import {
-  generateBackgrounds,
-  staticBackgroundStyles,
-} from '@/theme/backgrounds';
-import {
-  generateBorderColors,
-  generateBorderRadius,
-  generateBorderWidths,
-  staticBorderStyles,
-} from '@/theme/borders';
+import { generateBackgrounds, staticBackgroundStyles } from '@/theme/backgrounds';
+import { generateBorderColors, generateBorderRadius, generateBorderWidths, staticBorderStyles } from '@/theme/borders';
 import componentsGenerator from '@/theme/components';
-import {
-  generateFontColors,
-  generateFontSizes,
-  staticFontStyles,
-} from '@/theme/fonts';
+import { generateFontColors, generateFontSizes, staticFontStyles } from '@/theme/fonts';
 import { generateGutters, staticGutterStyles } from '@/theme/gutters';
 import layout from '@/theme/layout';
 import generateConfig from '@/theme/ThemeProvider/generateConfig';
@@ -46,9 +26,7 @@ type Props = PropsWithChildren<{
 
 function ThemeProvider({ children = false, storage }: Props) {
   // Current theme variant
-  const [variant, setVariant] = useState(
-    (storage.getString('theme') as Variant) || 'default',
-  );
+  const [variant, setVariant] = useState((storage.getString('theme') as Variant) || 'default');
 
   // Initialize theme at default if not defined
   useEffect(() => {
@@ -105,6 +83,7 @@ function ThemeProvider({ children = false, storage }: Props) {
 
   const navigationTheme = useMemo(() => {
     return {
+      fonts: DefaultTheme.fonts,
       colors: fullConfig.navigationColors,
       dark: variant === 'dark',
     };
@@ -130,9 +109,7 @@ function ThemeProvider({ children = false, storage }: Props) {
     return { ...theme, changeTheme, components, navigationTheme };
   }, [theme, components, navigationTheme, changeTheme]);
 
-  return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export default ThemeProvider;

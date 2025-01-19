@@ -43,6 +43,10 @@ export default {
   wrap: {
     flexWrap: 'wrap',
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   /* Sizes Layouts */
   flex_1: {
     flex: 1,
@@ -77,5 +81,44 @@ export default {
   },
   z10: {
     zIndex: 10,
+  },
+  w_20: {
+    width: '20%',
+  },
+  w_25: {
+    width: '25%',
+  },
+  w_30: {
+    width: '30%',
+  },
+  w_50: {
+    width: '50%',
+  },
+  w_60: {
+    width: '60%',
+  },
+  w_70: {
+    width: '70%',
+  },
+  w_75: {
+    width: '75%',
+  },
+  w_100: {
+    width: '100%',
+  },
+  opacity_0: {
+    opacity: 0,
+  },
+  opacity_25: {
+    opacity: 0.25,
+  },
+  opacity_50: {
+    opacity: 0.5,
+  },
+  opacity_75: {
+    opacity: 0.75,
+  },
+  opacity_100: {
+    opacity: 1,
   },
 } as const satisfies Record<string, ViewStyle>;
