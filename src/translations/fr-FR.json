@@ -1,4 +1,24 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "save": "Save",
+    "delete": "Delete",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info",
+    "search": "Search",
+    "password": "Password"
+  },
   "wallet": {
     "common_appName": {
       "full": "Wallet React Native",
@@ -14,6 +34,12 @@
       "title": "Oups ! Quelque chose s'est mal passé.",
       "description": "Nous sommes désolés pour le désagrément. Veuillez réessayer plus tard.",
       "cta": "Recharger l'écran"
+    },
+    "import": {
+      "placeholder": "Enter your private key or 12, 15, 18, 21, 24 words seed phrase. \n Separate each word with a single space if you have a seed phrase.",
+      "title": "Import from Seed",
+      "description": "You can import your existing wallet using the private key or a seed phrase.",
+      "tip": "Your credentials are stored locally on your device and never leave it."
     }
   },
   "onboarding": {
@@ -32,6 +58,8 @@
   },
   "welcome": {
     "title": "By proceeding, you agree to Rely's",
-    "terms": " Terms of Use"
+    "terms": " Terms of Use",
+    "create_wallet": "Create Wallet",
+    "import_wallet": "Import Wallet"
   }
 }

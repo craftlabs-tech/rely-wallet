@@ -47,6 +47,9 @@ export default {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  selfCenter: {
+    alignSelf: 'center',
+  },
   /* Sizes Layouts */
   flex_1: {
     flex: 1,
@@ -102,6 +105,12 @@ export default {
   },
   w_75: {
     width: '75%',
+  },
+  w_80: {
+    width: '80%',
+  },
+  w_90: {
+    width: '90%',
   },
   w_100: {
     width: '100%',

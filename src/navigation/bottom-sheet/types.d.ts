@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
-import type { BackdropPressBehavior } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
+import type {
+  BackdropPressBehavior,
+  BottomSheetBackdropProps,
+} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 import type {
   Descriptor,
   NavigationHelpers,
@@ -11,6 +14,7 @@ import type {
   StackNavigationState,
 } from '@react-navigation/native';
 import type { Animated } from 'react-native';
+import type { WithSpringConfig } from 'react-native-reanimated';
 
 export type BottomSheetNavigationEventMap = {
   /**
@@ -88,6 +92,7 @@ export type Scene<T> = {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export type BottomSheetDescriptor = {
   removing?: boolean;
 } & Descriptor<ParamListBase, string, StackNavigationState, BottomSheetNavigationOptions>;
@@ -97,11 +102,13 @@ export type BottomSheetDescriptorMap = {
 };
 
 export type BottomSheetNavigationOptions = {
+  animationConfigs?: WithSpringConfig;
   backdropOpacity?: number;
   backdropColor?: string;
   backdropPressBehavior?: BackdropPressBehavior;
   height?: number | string;
   offsetY?: number;
+  backdropComponent?: React.FC<BottomSheetBackdropProps> | null;
 } & Partial<
   Pick<
     BottomSheetProps,

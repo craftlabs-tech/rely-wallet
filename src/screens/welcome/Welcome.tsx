@@ -1,6 +1,7 @@
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { useNavigation } from '@react-navigation/native';
 import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -15,6 +16,7 @@ export default function Welcome() {
   const { backgrounds, colors, fonts, gutters, layout } = useTheme();
   const { width, height } = useWindowDimensions();
   const { bottom } = useSafeAreaInsets();
+  const navigation = useNavigation();
   const { t } = useTranslation(['welcome']);
 
   const leftColor = useSharedValue('#513eff');
@@ -33,6 +35,11 @@ export default function Welcome() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // callbacks
+  const createWallet = () => {
+    navigation.navigate('createWallet');
+  };
+
   return (
     <View style={[layout.flex_1]}>
       <Canvas style={layout.flex_1}>
@@ -40,8 +47,8 @@ export default function Welcome() {
           <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={bg_colors} />
         </Rect>
       </Canvas>
-      <View style={[layout.flex_1, layout.fullWidth, layout.fullHeight, layout.absolute, layout.center, layout.z10]}>
-        <Text style={[fonts.text_04, fonts.rubikBold, fonts.size_24, gutters.marginBottom_12]}>Rely Wallet</Text>
+      <View style={[layout.flex_1, layout.fullWidth, layout.fullHeight, layout.absolute, layout.center, layout.z1]}>
+        <Text style={[fonts.white, fonts.rubikBold, fonts.size_24, gutters.marginBottom_12]}>Rely Wallet</Text>
 
         <Button
           size="xl"
@@ -53,7 +60,7 @@ export default function Welcome() {
           }}
           radius={24}
           border={{ width: 3 }}
-          onPress={console.log}
+          onPress={createWallet}
           shadow={{
             elevation: 8,
             offset: { width: 0, height: 0 },
@@ -63,8 +70,8 @@ export default function Welcome() {
           }}
           iconSpacing={12}
           startIcon={<Ionicons name="wallet-outline" size={24} color={colors.text_01} />}
-          animation={{ type: 'pulse', config: { delay: 3000, duration: 300, scale: 0.96 } }}
-          textStyle={fonts.rubikMedium}
+          animation={{ type: 'pulse', config: { delay: 3000, duration: 600, scale: 0.96 } }}
+          textStyle={[fonts.rubikMedium, fonts.text_01]}
           isDisabled={false}
           variant="outlined">
           Create Wallet
@@ -86,7 +93,7 @@ export default function Welcome() {
           iconSpacing={12}
           startIcon={<Ionicons name="key-outline" size={24} color={colors.text_01} />}
           animation={{ type: 'none' }}
-          textStyle={fonts.rubikMedium}
+          textStyle={[fonts.rubikMedium, fonts.text_01]}
           isDisabled={false}
           variant="outlined">
           Import Wallet

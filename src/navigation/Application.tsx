@@ -102,7 +102,7 @@ function WalletNavigator() {
   return (
     <BSStack.Navigator screenOptions={{ headerShown: false }}>
       <BSStack.Screen component={Welcome} name="home" />
-      <BSStack.Screen component={Welcome} name="createWallet" options={{ height: height * 0.5 }} />
+      <BSStack.Screen component={Welcome} name="createWallet" options={{ height: height * 0.6 }} />
       <BSStack.Screen component={Example} name="importWallet" />
       <BSStack.Screen component={Example} name="setPassword" />
     </BSStack.Navigator>

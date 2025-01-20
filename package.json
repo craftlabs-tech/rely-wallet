@@ -19,6 +19,7 @@
   "dependencies": {
     "@dr.pogodin/react-native-fs": "^2.30.3",
     "@gorhom/bottom-sheet": "^5",
+    "@react-native-community/blur": "^4.4.1",
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-native-vector-icons/ant-design": "^4.4.2",
     "@react-native-vector-icons/common": "^11.0.0",
