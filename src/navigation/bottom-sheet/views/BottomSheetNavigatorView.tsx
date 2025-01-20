@@ -1,6 +1,5 @@
 import type { BottomSheetDescriptorMap, BottomSheetNavigationConfig, BottomSheetNavigationHelpers } from '../types';
-import type { StackNavigationState } from '@react-navigation/native';
-import type { RootStackParamList } from '@/navigation/types';
+import type { ParamListBase, StackNavigationState } from '@react-navigation/native';
 
 import { NavigationHelpersContext, StackActions } from '@react-navigation/native';
 import { useCallback, useMemo, useRef } from 'react';
@@ -10,7 +9,7 @@ import { useForceUpdate } from '@/hooks';
 import BottomSheetRoute from './BottomSheetRoute';
 
 type Props = {
-  state: StackNavigationState<RootStackParamList>;
+  state: StackNavigationState<ParamListBase>;
   navigation: BottomSheetNavigationHelpers;
   descriptors: BottomSheetDescriptorMap;
 } & BottomSheetNavigationConfig;
@@ -69,14 +68,13 @@ const BottomSheetNavigatorView = ({ descriptors, state, navigation }: Props) => 
   return (
     <NavigationHelpersContext.Provider value={navigation}>
       {descriptors[firstKey].render()}
-
       {Object.keys(descriptorsCache.current).map((key) => (
         <BottomSheetRoute
-          descriptor={descriptorsCache.current[key]}
           key={key}
-          onDismiss={handleOnDismiss}
-          removing={descriptorsCache.current[key].removing}
           routeKey={key}
+          onDismiss={handleOnDismiss}
+          descriptor={descriptorsCache.current[key]}
+          removing={descriptorsCache.current[key].removing}
         />
       ))}
     </NavigationHelpersContext.Provider>

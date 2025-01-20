@@ -1,4 +1,4 @@
-import type { LinkingOptions, NavigationContainerRef, NavigationState } from '@react-navigation/native';
+import type { LinkingOptions, NavigationState } from '@react-navigation/native';
 import type { RootStackParamList } from '@/navigation/types';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,20 +8,19 @@ import { useRef } from 'react';
 import { useWindowDimensions } from 'react-native';
 
 import { useTheme } from '@/theme';
+import { createBottomSheetNavigator } from '@/navigation/bottom-sheet';
 import { Paths } from '@/navigation/paths';
 
-import { Example, Onboarding, Startup, Welcome } from '@/screens';
+import { CreateWallet, Example, Onboarding, Startup, Welcome } from '@/screens';
 
 import { storage } from '@/services/mmkv';
 
-import { createBottomSheetNavigator } from './bottom-sheet';
+import { navigationRef } from './navigationRef';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const BSStack = createBottomSheetNavigator();
 
 function ApplicationNavigator() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const containerRef = useRef<NavigationContainerRef<any>>(null);
   const routeNameRef = useRef<string | undefined>(undefined);
   const { navigationTheme, variant } = useTheme();
   const onboarding = storage.getBoolean('onboarding');
@@ -52,10 +51,10 @@ function ApplicationNavigator() {
 
   const onStateChange = (state: NavigationState | undefined) => {
     const previousRouteName = routeNameRef.current;
-    const currentRouteName = containerRef.current?.getCurrentRoute()?.name;
+    const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
 
     if (previousRouteName !== currentRouteName) {
-      // Replace the line below to add the tracker from a mobile analytics SDK
+      // TODO: Replace the line below to add the tracker from a mobile analytics SDK
       console.log('Navigation state changed:', state); // eslint-disable-line no-console
     }
 
@@ -75,13 +74,13 @@ function ApplicationNavigator() {
   });
 
   const onReady = () => {
-    routeNameRef.current = containerRef.current?.getCurrentRoute()?.name;
-    navigationIntegration.registerNavigationContainer(containerRef);
+    routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
+    navigationIntegration.registerNavigationContainer(navigationRef);
   };
 
   return (
     <NavigationContainer
-      ref={containerRef}
+      ref={navigationRef}
       theme={navigationTheme}
       linking={linking}
       onReady={onReady}
@@ -102,7 +101,11 @@ function WalletNavigator() {
   return (
     <BSStack.Navigator screenOptions={{ headerShown: false }}>
       <BSStack.Screen component={Welcome} name="home" />
-      <BSStack.Screen component={Welcome} name="createWallet" options={{ height: height * 0.6 }} />
+      <BSStack.Screen
+        component={CreateWallet}
+        name="createWallet"
+        options={{ height: height * 0.5, backdropOpacity: 0.75 }}
+      />
       <BSStack.Screen component={Example} name="importWallet" />
       <BSStack.Screen component={Example} name="setPassword" />
     </BSStack.Navigator>
