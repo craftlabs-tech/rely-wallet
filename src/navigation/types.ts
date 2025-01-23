@@ -6,6 +6,13 @@ export type RootStackParamList = {
   [Paths.Example]: undefined;
   [Paths.Onboarding]: undefined;
   [Paths.Welcome]: undefined;
+  [Paths.CreateWallet]: undefined;
+  [Paths.ImportWallet]: undefined;
+  [Paths.SetPassword]: { mnemonic: string };
+  [Paths.Home]: undefined;
+  [Paths.Auth]: undefined;
+  [Paths.Login]: undefined;
+  [Paths.Reset]: undefined;
   [Paths.Root]: undefined;
 };
 

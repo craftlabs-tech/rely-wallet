@@ -1,13 +1,17 @@
+/* eslint-disable unicorn/consistent-function-scoping */
+import type { NavigationProp } from '@react-navigation/native';
+import type { RootStackParamList } from '@/navigation/types';
+
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, Pressable, Text, useWindowDimensions, View } from 'react-native';
+import { Image, Linking, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@/theme';
+import { Paths } from '@/navigation/paths';
 
 import { Button } from '@/components/animations';
 import { getRandomColor } from '@/utils/theme';
@@ -15,9 +19,8 @@ import { getRandomColor } from '@/utils/theme';
 export default function Welcome() {
   const { backgrounds, colors, fonts, gutters, layout } = useTheme();
   const { width, height } = useWindowDimensions();
-  const { bottom } = useSafeAreaInsets();
-  const navigation = useNavigation();
-  const { t } = useTranslation(['welcome']);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { t } = useTranslation(['welcome', 'common']);
 
   const leftColor = useSharedValue('#513eff');
   const rightColor = useSharedValue('#52e5ff');
@@ -35,10 +38,15 @@ export default function Welcome() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // callbacks
   const createWallet = () => {
-    navigation.navigate('createWallet');
+    navigation.navigate(Paths.CreateWallet);
   };
+
+  const importWallet = () => {
+    navigation.navigate(Paths.ImportWallet);
+  };
+
+  const openTerms = () => Linking.openURL('https://getrely.io/terms');
 
   return (
     <View style={[layout.flex_1]}>
@@ -74,7 +82,7 @@ export default function Welcome() {
           textStyle={[fonts.rubikMedium, fonts.text_01]}
           isDisabled={false}
           variant="outlined">
-          Create Wallet
+          {t('welcome:create_wallet')}
         </Button>
 
         <Button
@@ -82,7 +90,7 @@ export default function Welcome() {
           style={[backgrounds.ui_01, gutters.margin_10]}
           radius={24}
           border={{ width: 3, color: colors.ui_01 }}
-          onPress={console.log}
+          onPress={importWallet}
           shadow={{
             elevation: 12,
             offset: { width: 0, height: 0 },
@@ -96,21 +104,13 @@ export default function Welcome() {
           textStyle={[fonts.rubikMedium, fonts.text_01]}
           isDisabled={false}
           variant="outlined">
-          Import Wallet
+          {t('welcome:import_wallet')}
         </Button>
       </View>
 
-      <View
-        style={[
-          layout.row,
-          layout.center,
-          layout.fullWidth,
-          layout.absolute,
-          layout.bottom0,
-          { paddingBottom: bottom },
-        ]}>
+      <View style={[layout.row, layout.center, layout.fullWidth, layout.absolute, layout.bottom0, gutters.padding_8]}>
         <Text style={[fonts.text_01, fonts.center, layout.center]}>{t('welcome:title')}</Text>
-        <Pressable onPress={console.log} style={layout.center}>
+        <Pressable onPress={openTerms} style={layout.center}>
           <Text style={[fonts.text_04, fonts.center]}>{t('welcome:terms')}</Text>
         </Pressable>
       </View>

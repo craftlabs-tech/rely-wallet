@@ -20,9 +20,7 @@ function AssetByVariant({ extension = 'png', path, ...props }: Props) {
 
   useEffect(() => {
     try {
-      const defaultSource = z
-        .custom<ImageSourcePropType>()
-        .parse(images(`./${path}.${extension}`));
+      const defaultSource = z.custom<ImageSourcePropType>().parse(images(`./${path}.${extension}`));
 
       if (variant === 'default') {
         setImage(defaultSource);
@@ -30,9 +28,7 @@ function AssetByVariant({ extension = 'png', path, ...props }: Props) {
       }
 
       try {
-        const fetchedModule = z
-          .custom<ImageSourcePropType>()
-          .parse(images(`./${variant}/${path}.${extension}`));
+        const fetchedModule = z.custom<ImageSourcePropType>().parse(images(`./${variant}/${path}.${extension}`));
         setImage(fetchedModule);
       } catch (error) {
         // eslint-disable-next-line no-console

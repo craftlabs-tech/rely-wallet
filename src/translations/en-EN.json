@@ -17,7 +17,8 @@
     "warning": "Warning",
     "info": "Info",
     "search": "Search",
-    "password": "Password"
+    "password": "Password",
+    "seed_phrase": "Seed Phrase"
   },
   "wallet": {
     "common_appName": {
@@ -61,5 +62,15 @@
     "terms": " Terms of Use",
     "create_wallet": "Create Wallet",
     "import_wallet": "Import Wallet"
+  },
+  "import": {
+    "title": "Import from Seed",
+    "placeholder": "Enter your private key or 12, 15, 18, 21, 24 words seed phrase. \n Separate each word with a single space if you have a seed phrase.",
+    "description": "You can import your existing wallet using the private key or a seed phrase.",
+    "tip": "Your credentials are stored locally on your device and never leave it."
+  },
+  "auth": {
+    "forgot_password": "Forgot Password?",
+    "unlock": "Unlock Wallet"
   }
 }

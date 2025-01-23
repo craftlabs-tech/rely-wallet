@@ -1,24 +1,37 @@
 import type { LinkingOptions, NavigationState } from '@react-navigation/native';
+import type { ReactNode } from 'react';
 import type { RootStackParamList } from '@/navigation/types';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Sentry from '@sentry/react-native';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import { useTheme } from '@/theme';
 import { createBottomSheetNavigator } from '@/navigation/bottom-sheet';
+import { navigationRef } from '@/navigation/navigationRef';
 import { Paths } from '@/navigation/paths';
 
-import { CreateWallet, Example, Onboarding, Startup, Welcome } from '@/screens';
+import {
+  CreateWallet,
+  Example,
+  ImportWallet,
+  Login,
+  Onboarding,
+  Reset,
+  SetPassword,
+  Startup,
+  Welcome,
+} from '@/screens';
 
+import { initSentry } from '@/services/logger/sentry';
 import { storage } from '@/services/mmkv';
 
-import { navigationRef } from './navigationRef';
-
 const Stack = createStackNavigator<RootStackParamList>();
-const BSStack = createBottomSheetNavigator();
+const BSStack = createBottomSheetNavigator<RootStackParamList>();
 
 function ApplicationNavigator() {
   const routeNameRef = useRef<string | undefined>(undefined);
@@ -47,7 +60,9 @@ function ApplicationNavigator() {
     },
   };
 
-  const initialRouteName = (!onboarding ? 'onboarding' : !initialized ? 'welcome' : 'root') as never;
+  const initialRouteName = !onboarding ? Paths.Onboarding : !initialized ? Paths.Welcome : Paths.Auth;
+
+  const navigationIntegration = Sentry.reactNavigationIntegration({ enableTimeToInitialDisplay: true });
 
   const onStateChange = (state: NavigationState | undefined) => {
     const previousRouteName = routeNameRef.current;
@@ -62,36 +77,40 @@ function ApplicationNavigator() {
     routeNameRef.current = currentRouteName;
   };
 
-  const navigationIntegration = Sentry.reactNavigationIntegration({
-    enableTimeToInitialDisplay: true,
-  });
-
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    integrations: [navigationIntegration],
-    // uncomment the line below to enable Spotlight (https://spotlightjs.com)
-    spotlight: __DEV__,
-  });
-
   const onReady = () => {
     routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
     navigationIntegration.registerNavigationContainer(navigationRef);
+    initSentry(navigationIntegration);
   };
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={navigationTheme}
-      linking={linking}
-      onReady={onReady}
-      onStateChange={onStateChange}>
-      <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
-        <Stack.Screen component={Startup} name={Paths.Startup} />
-        <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
-        <Stack.Screen component={WalletNavigator} name={Paths.Welcome} options={{ gestureEnabled: false }} />
-        <Stack.Screen component={Example} name={Paths.Example} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ToastProvider>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={navigationTheme}
+        linking={linking}
+        onReady={onReady}
+        onStateChange={onStateChange}>
+        <Stack.Navigator key={variant} screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
+          <Stack.Screen component={Startup} name={Paths.Startup} />
+          <Stack.Screen component={Onboarding} name={Paths.Onboarding} />
+          <Stack.Screen component={WalletNavigator} name={Paths.Welcome} options={{ gestureEnabled: false }} />
+          <Stack.Screen component={AuthNavigator} name={Paths.Auth} options={{ gestureEnabled: false }} />
+          <Stack.Screen component={Example} name={Paths.Root} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ToastProvider>
+  );
+}
+
+function AuthNavigator() {
+  const { height } = useWindowDimensions();
+
+  return (
+    <BSStack.Navigator>
+      <BSStack.Screen component={Login} name={Paths.Login} />
+      <BSStack.Screen component={Reset} name={Paths.Reset} options={{ height: height * 0.4 }} />
+    </BSStack.Navigator>
   );
 }
 
@@ -100,15 +119,22 @@ function WalletNavigator() {
 
   return (
     <BSStack.Navigator screenOptions={{ headerShown: false }}>
-      <BSStack.Screen component={Welcome} name="home" />
-      <BSStack.Screen
-        component={CreateWallet}
-        name="createWallet"
-        options={{ height: height * 0.5, backdropOpacity: 0.75 }}
-      />
-      <BSStack.Screen component={Example} name="importWallet" />
-      <BSStack.Screen component={Example} name="setPassword" />
+      <BSStack.Screen component={Welcome} name={Paths.Home} />
+      <BSStack.Screen component={CreateWallet} name={Paths.CreateWallet} options={{ height: height * 0.5 }} />
+      <BSStack.Screen component={ImportWallet} name={Paths.ImportWallet} options={{ height: height * 0.5 }} />
+      <BSStack.Screen component={SetPassword} name={Paths.SetPassword} options={{ height: height * 0.5 }} />
     </BSStack.Navigator>
+  );
+}
+
+function ToastProvider({ children }: { children: ReactNode }) {
+  const { top } = useSafeAreaInsets();
+
+  return (
+    <>
+      {children}
+      <Toast topOffset={top * 1.6} />
+    </>
   );
 }
 
