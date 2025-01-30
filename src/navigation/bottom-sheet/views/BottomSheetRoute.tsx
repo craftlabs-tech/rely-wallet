@@ -134,8 +134,6 @@ const BottomSheetRoute = ({
       <BottomSheetBackdrop
         appearsOnIndex={0}
         disappearsOnIndex={-1}
-        // @ts-ignore
-        animatedIndex={{ value: 1 }}
         opacity={backdropOpacity}
         style={backdropStyle}
         pressBehavior={backdropPressBehavior}

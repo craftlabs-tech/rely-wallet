@@ -54,6 +54,12 @@ export default {
   flex_1: {
     flex: 1,
   },
+  flex_2: {
+    flex: 2,
+  },
+  flex_3: {
+    flex: 3,
+  },
   fullHeight: {
     height: '100%',
   },
@@ -126,6 +132,12 @@ export default {
   },
   opacity_75: {
     opacity: 0.75,
+  },
+  opacity_80: {
+    opacity: 0.8,
+  },
+  opacity_90: {
+    opacity: 0.9,
   },
   opacity_100: {
     opacity: 1,

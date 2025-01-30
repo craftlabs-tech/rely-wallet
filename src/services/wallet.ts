@@ -38,6 +38,7 @@ export const createEVMWallet = (phrase: string, index = 0): Promise<EVMWallet> =
     return Promise.resolve({
       balance: 0,
       address: wallet.address,
+      privateKey: wallet.privateKey,
       nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     });
   } catch (error) {
@@ -112,6 +113,7 @@ export const createBitcoinWallet = async (phrase: string, index = 0): Promise<Bi
       balance: 0,
       address: wallet.address as string,
       publicKey: wallet.address as string,
+      privateKey: keyPair.toWIF(),
       nativeCurrency: { name: 'BTC', symbol: 'BTC', decimals: 8 },
     };
   } catch (error) {

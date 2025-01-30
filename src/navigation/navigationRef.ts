@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { NavigationContainerRef } from '@react-navigation/native';
+import type { RootStackParamList } from './types';
 
-import { useRef } from 'react';
+import { createNavigationContainerRef } from '@react-navigation/native';
 
-export const navigationRef = useRef<NavigationContainerRef<any>>(null);
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 export function navigate(name: string, params: any) {
-  if (navigationRef.current && navigationRef.current.isReady()) {
-    // @ts-ignore
+  if (navigationRef.isReady()) {
     navigationRef.navigate(name as never, params as any);
   }
 }

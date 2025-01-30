@@ -9,6 +9,7 @@ import { logger } from '@/services/logger';
 export interface EVMWallet {
   address: string;
   balance: number;
+  privateKey: string;
   nativeCurrency: {
     name: string;
     symbol: string;
@@ -22,6 +23,7 @@ export interface EVMWallet {
 
 export interface SolanaWallet {
   publicKey: string;
+  secretKey: string;
   address: string;
   balance: number;
   nativeCurrency: {
@@ -33,6 +35,7 @@ export interface SolanaWallet {
 
 export interface MinaWallet {
   publicKey: string;
+  privateKey: string;
   address: string;
   balance: number;
   nativeCurrency: {
@@ -45,6 +48,7 @@ export interface MinaWallet {
 export interface BitcoinWallet {
   address: string;
   publicKey: string;
+  privateKey: string;
   balance: number;
   nativeCurrency: {
     name: string;

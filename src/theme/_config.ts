@@ -33,6 +33,7 @@ const colorsLight = {
   interactive_03: 'rgba(255,255,255,0.1)',
   interactive_04: 'rgba(147,155,161,1)',
   ui_background: 'rgba(255,255,255,1)',
+  surface: 'rgba(20,20,20,1)',
   ui_01: 'rgba(238,242,245,1)',
   ui_02: 'rgba(0,0,0,0.1)',
   ui_03: 'rgba(0,0,0,0.86)',
@@ -81,6 +82,7 @@ const colorsDark = {
   interactive_03: 'rgba(255,255,255,0.1)',
   interactive_04: 'rgba(131,140,145,1)',
   ui_background: 'rgba(20,20,20,1)',
+  surface: 'rgba(255,255,255,1)',
   ui_01: 'rgba(37,37,40,1)',
   ui_02: 'rgba(0,0,0,0.1)',
   ui_03: 'rgba(0,0,0,0.86)',
@@ -102,7 +104,7 @@ const colorsDark = {
   blurred_bg: 'rgba(0,0,0,0.3)',
 } as const;
 
-const sizes = [1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96] as const;
+const sizes = [1, 2, 3, 4, 5, 6, 8, 10, 12, 13, 14, 15, 16, 20, 24, 32, 40, 48, 64, 80, 96] as const;
 
 export const config = {
   backgrounds: colorsLight,

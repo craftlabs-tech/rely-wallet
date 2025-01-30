@@ -11,4 +11,8 @@ export const enum Paths {
   Auth = 'auth',
   Login = 'login',
   Reset = 'reset',
+  Scan = 'scan',
+  SessionProposal = 'session-proposal',
+  SessionRequest = 'session-request',
+  WalletconnectSessions = 'walletconnect-sessions',
 }

@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, Linking, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
@@ -18,6 +19,7 @@ import { getRandomColor } from '@/utils/theme';
 
 export default function Welcome() {
   const { backgrounds, colors, fonts, gutters, layout } = useTheme();
+  const { bottom } = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { t } = useTranslation(['welcome', 'common']);
@@ -49,7 +51,7 @@ export default function Welcome() {
   const openTerms = () => Linking.openURL('https://getrely.io/terms');
 
   return (
-    <View style={[layout.flex_1]}>
+    <View style={layout.flex_1}>
       <Canvas style={layout.flex_1}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={bg_colors} />
@@ -108,7 +110,16 @@ export default function Welcome() {
         </Button>
       </View>
 
-      <View style={[layout.row, layout.center, layout.fullWidth, layout.absolute, layout.bottom0, gutters.padding_8]}>
+      <View
+        style={[
+          layout.row,
+          layout.center,
+          layout.fullWidth,
+          layout.absolute,
+          layout.bottom0,
+          layout.z1,
+          { paddingBottom: bottom ? bottom : 12 },
+        ]}>
         <Text style={[fonts.text_01, fonts.center, layout.center]}>{t('welcome:title')}</Text>
         <Pressable onPress={openTerms} style={layout.center}>
           <Text style={[fonts.text_04, fonts.center]}>{t('welcome:terms')}</Text>

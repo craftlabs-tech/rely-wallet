@@ -122,7 +122,7 @@ function Login() {
           source={require('@/theme/assets/lottie/wallet-loading.lottie')}
         />
       </View>
-      <View style={[layout.flex_1, backgrounds.ui_background, layout.center, layout.fullWidth, gutters.gap_12]}>
+      <View style={[layout.flex_1, backgrounds.ui_background, layout.center, layout.fullWidth, gutters.gap_16]}>
         <Input
           value={password}
           style={layout.w_80}
@@ -130,14 +130,14 @@ function Login() {
           placeholder={t('common:password')}
           onChangeText={setPassword}
         />
-        <View style={[layout.row, layout.center, layout.justifyCenter, gutters.gap_8]}>
+        <View style={[layout.row, layout.center, gutters.gap_8]}>
           <Button
             type="primary"
             text={t('auth:unlock')}
             disabled={password.length < 6}
             onPress={() => unlock('password')}
           />
-          {!biometryType && (
+          {biometryType && (
             <Button type="primary" onPress={() => unlock('biometry')}>
               {biometryType !== BIOMETRY_TYPE.FACE_ID ? (
                 <Svg width={24} height={24} fill="none">

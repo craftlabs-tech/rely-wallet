@@ -27,8 +27,8 @@ function CreateWallet() {
   const { colors, components, gutters, layout } = useTheme();
 
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState('111111');
-  const [confirmPassword, setConfirmPassword] = useState('111111');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
